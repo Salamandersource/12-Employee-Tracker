@@ -2,6 +2,8 @@ const inquirer = require("inquirer");
 const mysql = require("mysql2");
 const cTable = require("console.table");
 
+console.log("im in the index file");
+
 const db = mysql.createConnection(
   {
     host: "localhost",
@@ -16,6 +18,7 @@ const db = mysql.createConnection(
 
 // Query database
 function viewDepartments() {
+  console.log("im inside the view department function");
   db.query("SELECT * FROM department", function (err, results) {
     console.log(results);
     return results;
@@ -43,7 +46,7 @@ function addDepartments() {
       },
     ])
     .then((response) => {
-      db.query("INSERT INTO department SET ?", response.name, function (err, results) {
+      db.query(`INSERT INTO department (name) VALUES ('${response.name}')`, function (err, result) {
         console.log("Department added");
       });
     });
@@ -71,49 +74,53 @@ function addRoles() {
         },
       ])
       .then((response) => {
-        db.query("INSERT INTO department SET ?", response, function (err, results) {
+        db.query("INSERT INTO department VALUES", response, function (err, results) {
           console.log("Role added");
         });
       });
   });
 }
 
-inquirer
-  .prompt([
-    {
-      type: "list",
-      message: "What would you like to do?",
-      name: "choice",
-      choices: [
-        { name: "View all departments", value: "VIEW DEPARTMENTS" },
-        { name: "View all roles", value: "VIEW ROLES" },
-        { name: "View all employees", value: "VIEW EMPLOYEES" },
-        { name: "Add a department", value: "ADD DEPARTMENT" },
-        { name: "Add a role", value: "ADD ROLE" },
-        { name: "Exit?", value: "EXIT" },
-      ],
-    },
-  ])
-  .then((response) => {
-    console.log(response.choice);
-    if (response.choice === "VIEW_DEPARTMENTS") {
-      viewDepartments();
-    }
-    if (response.choice === "VIEW_ROLES") {
-      viewRoles();
-    }
-    if (response.choice === "VIEW_EMPLOYEES") {
-      viewEmployees();
-    }
-    if (response.choice === "ADD_DEPARTMENTS") {
-      addDepartments();
-    }
-    if (response.choice === "ADD_ROLE") {
-      addRole();
-    }
-    if (response.choice === "EXIT") {
-      Exit();
-    } else {
-      addAnother();
-    }
-  });
+function start() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "What would you like to do?",
+        name: "choice",
+        choices: [
+          { name: "View all departments", value: "VIEW_DEPARTMENTS" },
+          { name: "View all roles", value: "VIEW_ROLES" },
+          { name: "View all employees", value: "VIEW_EMPLOYEES" },
+          { name: "Add a department", value: "ADD_DEPARTMENT" },
+          { name: "Add a role", value: "ADD_ROLE" },
+          { name: "Exit?", value: "EXIT" },
+        ],
+      },
+    ])
+    .then((response) => {
+      console.log(response.choice);
+      if (response.choice === "VIEW_DEPARTMENTS") {
+        viewDepartments();
+      }
+      if (response.choice === "VIEW_ROLES") {
+        viewRoles();
+      }
+      if (response.choice === "VIEW_EMPLOYEES") {
+        viewEmployees();
+      }
+      if (response.choice === "ADD_DEPARTMENT") {
+        addDepartments();
+      }
+      if (response.choice === "ADD_ROLE") {
+        addRole();
+      }
+      if (response.choice === "EXIT") {
+        Exit();
+      } else {
+        //addAnother();
+      }
+    });
+}
+
+start();
