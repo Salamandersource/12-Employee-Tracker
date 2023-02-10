@@ -51,8 +51,12 @@ function addDepartments() {
       });
     });
 }
+//INSERT INTO role
+//(title, salary, department_id)
+//VALUES
+//('Sales Lead', 100000, 1)
 
-function addRoles() {
+function addRole() {
   db.query("SELECT * FROM department", function (err, results) {
     const departments = results.map((department) => ({ name: department.name, value: department.id }));
     console.log(departments);
@@ -74,7 +78,7 @@ function addRoles() {
         },
       ])
       .then((response) => {
-        db.query("INSERT INTO department VALUES", response, function (err, results) {
+        db.query(`INSERT INTO role (title, salary, department_id) VALUES ('${response.title}', '${response.salary}', ${response.department_id})`, function (err, result) {
           console.log("Role added");
         });
       });
