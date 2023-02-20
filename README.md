@@ -31,10 +31,6 @@ This is a command-line application that runs with Node.js that dynamically gener
 
 ---
 
-- CUSTOMIZATIONS:
-  - The user may modify the prompt questions from the index.js file.
-  - The user may modify the styling template from the generateHTML.js file.
-
 ## Tech Stack
 
 - JavaScript
