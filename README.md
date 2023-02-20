@@ -22,13 +22,6 @@ This is a command-line application that runs with Node.js that dynamically gener
         4. Choose the employee role to add to the team profile page.
         5. Locate the generated team profile in public.html.
 
-## Usage
-
-- This Node CLI will prompt you to generate a webpage for your software engineering team.
-- The application will prompt you for information about the team manager and then information about the team members.
-- You can input any number of team members, including a mix of engineers and interns.
-- Validation is implemented to ensure that information provided is in the proper expected format.
-
 ---
 
 ## Tech Stack
